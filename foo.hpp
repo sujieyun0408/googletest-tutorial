@@ -1,3 +1,5 @@
+class FooTest;
+
 class Foo
 {
 public:
@@ -5,4 +7,6 @@ public:
 
 private:
     int _PrivateSum(int a, int b);
+
+    friend FooTest;
 };
