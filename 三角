@@ -1,0 +1,72 @@
+#include <iostream>
+#include <cmath>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+// Function to check if a triangle is valid based on the triangle inequality theorem
+bool isValidTriangle(int a, int b, int c) {
+    return (a + b > c) && (a + c > b) && (b + c > a);
+}
+
+// Function to calculate the area of the triangle using Heron's formula
+double calculateArea(int a, int b, int c) {
+    double s = (a + b + c) / 2.0;
+    return sqrt(s * (s - a) * (s - b) * (s - c));
+}
+
+// Function to convert radians to degrees
+double toDegrees(double radians) {
+    return radians * 180.0 / M_PI;
+}
+
+// Function to calculate the angles of the triangle
+void calculateAngles(int a, int b, int c, double &alpha, double &beta, double &gamma) {
+    // Using cosine rule to find angles
+    alpha = acos((b*b + c*c - a*a) / (2.0 * b * c));
+    beta = acos((a*a + c*c - b*b) / (2.0 * a * c));
+    gamma = acos((a*a + b*b - c*c) / (2.0 * a * b));
+    
+    // Converting radians to degrees
+    alpha = toDegrees(alpha);
+    beta = toDegrees(beta);
+    gamma = toDegrees(gamma);
+}
+
+int main() {
+    // Seed the random number generator
+    srand(time(0));
+
+    // Generate random sides for the triangle (between 11 and 149)
+    int a = rand() % 140 + 11;
+    int b = rand() % 140 + 11;
+    int c = rand() % 140 + 11;
+
+    cout << "Randomly generated sides: a = " << a << ", b = " << b << ", c = " << c << endl;
+
+    // Check if the triangle is valid
+    if (isValidTriangle(a, b, c)) {
+        cout << "The sides form a valid triangle." << endl;
+        
+        // Calculate the perimeter
+        int perimeter = a + b + c;
+        cout << "Perimeter: " << perimeter << endl;
+
+        // Calculate the area
+        double area = calculateArea(a, b, c);
+        cout << "Area: " << area << endl;
+
+        // Calculate the angles
+        double alpha, beta, gamma;
+        calculateAngles(a, b, c, alpha, beta, gamma);
+        cout << "Angles (in degrees):" << endl;
+        cout << "Alpha: " << alpha << endl;
+        cout << "Beta: " << beta << endl;
+        cout << "Gamma: " << gamma << endl;
+    } else {
+        cout << "The sides do not form a valid triangle." << endl;
+    }
+
+    return 0;
+}
